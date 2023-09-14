@@ -12,10 +12,7 @@ colors = ['white'] + colors + ['black']
 canvas = Canvas(root, background='black', width=400,height=200)
 canvas.pack()
 
-def callback(event):  
-    print( event.x, event.y)
 
-canvas.bind("<Button-1>", callback)
 
 
 class Oval():
@@ -26,7 +23,7 @@ class Oval():
         self.y1 = y1 - self.x_plus
         self.x2 = x2 + self.x_plus
         self.y2= y2 + self.x_plus
-        print(self.x1,self.y1,self.x2,self.y2)
+        # print(self.x1,self.y1,self.x2,self.y2)
         self.level = 0
         self.canvas = canvas
         self.x_sum, self.y_sum = 0,0
@@ -52,10 +49,14 @@ class Oval():
         self.change_color()
         self.canvas.after(75, self.move)
 
-    
+def callback(event):  
+    for i in range(20):
+        a = Oval(canvas=canvas, x1 = event.x,y1=event.y ,x2=event.x + 10,y2=event.y + 10)
+ 
+canvas.bind("<Button-1>", callback)
 
-for i in range(20):
-    a = Oval(canvas=canvas, x1 = 180,y1=160,x2=190,y2=170)
+# for i in range(20):
+    # a = Oval(canvas=canvas, x1 = 180,y1=160,x2=190,y2=170)
 
 
 
