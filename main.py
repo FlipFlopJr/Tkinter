@@ -1,5 +1,6 @@
 from tkinter import *
 from random import randint, shuffle, randrange
+import time
 
 root = Tk()
 root.geometry('400x200')
@@ -11,26 +12,35 @@ colors = ['white'] + colors + ['black']
 canvas = Canvas(root, background='black', width=400,height=200)
 canvas.pack()
 
+class Oval():
+    colors = colors
+    def __init__(self, canvas, x1,y1,x2,y2) -> None:
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+        self.level = 0
+        self.canvas = canvas
+        self.start_coord = (x1,y1,x2,y2)
+        self.shape = canvas.create_oval(self.x1,self.y1,self.x2,self.y2, fill = Oval.colors[self.level])
+        self.change_color()
 
-
-
-def create_oval(canvas,x1,y1,x2,y2, level = 0):
-    global colors
-    if level == 10:
-        canvas.create_oval(x1,y1,x2,y2, fill = colors[level])
-        return 1
-    else:
-        canvas.create_oval(x1,y1,x2,y2, fill = colors[level])
-        x_rand = randrange(-10,10)
-        y_rand = randrange(5,15)
-        x1,y1,x2,y2 = x1-x_rand,y1-y_rand,x2-x_rand,y2-y_rand
-        return create_oval(canvas,x1,y1,x2,y2, level=level+1)
+    def update(self):
+        pass
     
-        
-create_oval(canvas,180,180,190,190)
-create_oval(canvas,180,180,190,190)
-create_oval(canvas,180,180,190,190)
+    def change_color(self,):
+        self.canvas.itemconfig(self.shape, fill = colors[self.level])
+        self.level += 1
+        # print(self.level)
+        if self.level == 11:
+            self.level = 0
+        self.canvas.after(100, self.change_color)
 
-# for i in range(11):
-#     create_oval(canvas,180,180 - i *10,190,190 - i * 10,transparent = i)
+    
+    
+
+
+a = Oval(canvas=canvas, x1 = 180,y1=180,x2=190,y2=190)
+# root.after(100, a.)
+
 root.mainloop()
